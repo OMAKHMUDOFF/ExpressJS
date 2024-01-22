@@ -1,17 +1,22 @@
 import express from "express";
-import path, { dirname } from "path";
-import { fileURLToPath } from "url";
-import { engine } from "express-handlebars";
+import { create } from "express-handlebars";
+// import { dirname } from "path";
+// import { fileURLToPath } from "url";
 
 // Если не работает __dirname
 
-const __fileName = fileURLToPath(import.meta.url);
-const __dirname = dirname(__fileName);
+// const __fileName = fileURLToPath(import.meta.url);
+// const __dirname = dirname(__fileName);
 
 const app = express();
 
-app.engine("handlebars", engine());
-app.set("view engine", "handlebars");
+const hbs = create({
+  defaultLayout: "main",
+  extname: "hbs",
+});
+
+app.engine("hbs", hbs.engine);
+app.set("view engine", "hbs");
 app.set("views", "./views");
 
 // Home page
